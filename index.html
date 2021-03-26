@@ -10,9 +10,27 @@
     <h1>External file : </h1>
     <form action="/addProducts" method="post">
         <input type="text" placeholder="name" name="name">
-        <input type="text" placeholder="price" name="name">
-        <input type="text" placeholder="quantity" name="name">
+        <input type="text" placeholder="price" name="price">
+        <input type="text" placeholder="quantity" name="quantity">
         <button type="submit">Add Product</button>
     </form>
+
+    <div id="product-id">
+
+    </div>
+
+    <script>
+        fetch('/products')
+        .then(res => res.json())
+        .then(products => {
+            console.log(products);
+            const container = document.getElementById('product-id');
+            products.forEach(pd => {
+                const p = document.createElement('p');
+                p.innerText = `${pd.name} , ${pd.price ? 'price : '+pd.price : 'price : 0' }`;
+                container.appendChild(p);
+            });
+        })
+    </script>
 </body>
 </html>
