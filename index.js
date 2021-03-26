@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 
 client.connect(err => {
-  
+
   const collection = client.db("organicdb").collection("products");
   // perform actions on the collection object
   // read data
@@ -37,7 +37,7 @@ client.connect(err => {
     console.log(product);
     collection.insertOne(product)
       .then(result => {
-        res.send('Successfully done !')
+        res.redirect('/');
       })
   })
 
@@ -46,7 +46,7 @@ client.connect(err => {
     console.log(req.params.id);
     collection.deleteOne({ _id: ObjectId(req.params.id) })
       .then(result => {
-        console.log(result)
+        res.send(result.deletedCount > 0);
       })
 
   })
@@ -65,7 +65,7 @@ client.connect(err => {
     collection.updateOne({ _id: ObjectId(req.params.id) },
       { $set: { price: req.body.price, quantity: req.body.quantity } })
       .then(result => {
-        console.log(result);
+        res.send(result.modifiedCount > 0);
       })
 
   })
