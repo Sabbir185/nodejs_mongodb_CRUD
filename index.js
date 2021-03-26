@@ -48,6 +48,14 @@ client.connect(err => {
     })
     
   })
+
+  // for update , load single product
+  app.get('/update/:id',(req, res)=>{
+    collection.find({_id: ObjectId(req.params.id)})
+    .toArray((err, documents)=>{
+      res.send(documents[0])
+    })
+  })
   
 });
 

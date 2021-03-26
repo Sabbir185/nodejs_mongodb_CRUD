@@ -19,6 +19,10 @@
 
     </div>
 
+    <div id="single-product">
+
+    </div>
+
     <script>
 
         // calling api for display data , retrieve data
@@ -31,6 +35,7 @@
                 products.forEach(pd => {
                     const p = document.createElement('p');
                     p.innerHTML = `${pd.name} , ${pd.price ? 'price : '+pd.price : 'price : 0' }
+                        <button onclick="updateProduct('${pd._id}')">Update</button>
                         <button onclick="deleteProduct('${pd._id}')">Delete</button>
                     `;
                     container.appendChild(p);
@@ -46,6 +51,21 @@
             })
             .then(res => res.json())
             .then(data => console.log(data))
+        }
+
+        function updateProduct(id){
+            fetch(`/update/${id}`)
+            .then(res=> res.json())
+            .then(data=>{
+                console.log(data);
+                const update = document.getElementById('single-product');
+                update.innerHTML = `
+                    <h3>Product id : ${data._id} <br>
+                    <input type='text' value=${data.name} id='product-name' /> <br>
+                    <input type='text' value=${data.quantity} id='product-quantity' /> <br>
+                    <button>Submit</button>
+                `;
+            })
         }
     </script>
 </body>
