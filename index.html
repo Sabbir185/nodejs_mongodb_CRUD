@@ -34,7 +34,8 @@
                 const container = document.getElementById('product-id');
                 products.forEach(pd => {
                     const p = document.createElement('p');
-                    p.innerHTML = `${pd.name} , ${pd.price ? 'price : '+pd.price : 'price : 0' }
+                    p.innerHTML = `${pd.name} , ${pd.price ? 'price : '+pd.price : 'price : 0' } ,
+                        quantity : ${pd.quantity} 
                         <button onclick="updateProduct('${pd._id}')">Update</button>
                         <button onclick="deleteProduct(event, '${pd._id}')">Delete</button>
                     `;
