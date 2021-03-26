@@ -20,17 +20,33 @@
     </div>
 
     <script>
-        fetch('/products')
-        .then(res => res.json())
-        .then(products => {
-            console.log(products);
-            const container = document.getElementById('product-id');
-            products.forEach(pd => {
-                const p = document.createElement('p');
-                p.innerText = `${pd.name} , ${pd.price ? 'price : '+pd.price : 'price : 0' }`;
-                container.appendChild(p);
-            });
-        })
+
+        // calling api for display data , retrieve data
+        function loadProducts(){
+            fetch('/products')
+            .then(res => res.json())
+            .then(products => {
+                console.log(products);
+                const container = document.getElementById('product-id');
+                products.forEach(pd => {
+                    const p = document.createElement('p');
+                    p.innerHTML = `${pd.name} , ${pd.price ? 'price : '+pd.price : 'price : 0' }
+                        <button onclick="deleteProduct('${pd._id}')">Delete</button>
+                    `;
+                    container.appendChild(p);
+                });
+            })
+        }
+        loadProducts();
+
+        function deleteProduct(id){
+            console.log(id)
+            fetch(`/delete/${id}`,{
+                method:"DELETE"
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+        }
     </script>
 </body>
 </html>

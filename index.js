@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const ObjectId = require('mongodb').ObjectId;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
@@ -36,6 +37,16 @@ client.connect(err => {
     .then(result=>{
       res.send('Successfully done !')
     })
+  })
+
+  // delete product , import ObjectId from mongodb
+  app.delete('/delete/:id',(req, res)=>{
+    console.log(req.params.id);
+    collection.deleteOne({_id: ObjectId(req.params.id) })
+    .then(result=>{
+      console.log(result)
+    })
+    
   })
   
 });
